@@ -9,10 +9,9 @@ import Navbar from '@/components/layout/Navbar';
 import NetworkBadge from '@/components/layout/NetworkBadge';
 import Hero from '@/components/Hero';
 import Ticker from '@/components/Ticker';
-import PortfolioGallery from '@/components/PortfolioGallery';
-import ProductCatalog from '@/components/ProductCatalog';
-import WorkflowSteps from '@/components/WorkflowSteps';
 import SyariahCommitment from '@/components/SyariahCommitment';
+import WorkflowSteps from '@/components/WorkflowSteps';
+import ProductCatalog from '@/components/ProductCatalog';
 import SpkCalculator from '@/components/SpkCalculator';
 import TrackingSection from '@/components/TrackingSection';
 
@@ -24,10 +23,9 @@ function Storefront() {
       <main>
         <Hero />
         <Ticker />
-        <PortfolioGallery />
-        <ProductCatalog />
-        <WorkflowSteps />
         <SyariahCommitment />
+        <WorkflowSteps />
+        <ProductCatalog />
         <SpkCalculator />
         <TrackingSection />
       </main>

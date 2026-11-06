@@ -5,10 +5,10 @@ import { useDb } from '@/store/useDb';
 const COMPACT_THRESHOLD = 120;
 
 const NAV_LINKS = [
-  { href: '#portofolio', label: 'Portofolio 3D' },
-  { href: '#katalog', label: 'Katalog Busana' },
+  { href: '#komitmen', label: "Komitmen Syar'i" },
   { href: '#alur-spk', label: 'Alur SOP' },
-  { href: '#spk', label: 'Kasir & Buat SPK' },
+  { href: '#katalog', label: 'Katalog & Portofolio' },
+  { href: '#spk', label: 'Formulir SPK' },
   { href: '#lacak', label: 'Lacak Pesanan' },
 ];
 
@@ -44,15 +44,13 @@ export default function Navbar() {
             compact ? 'pointer-events-none max-w-0 overflow-hidden opacity-0' : 'max-w-xl opacity-100'
           }`}
         >
-          {/* Badge Database Status */}
-          <div className="mr-1.5 flex items-center gap-1.5 rounded-full border border-emerald-200/80 bg-emerald-50/90 px-3 py-1 text-xs font-semibold text-emerald-900 shadow-2xs">
+          <span className="mr-2 flex items-center gap-2 whitespace-nowrap rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
             </span>
-            <span>Supabase DB: Aktif</span>
-          </div>
-
+            Menerima Pesanan SPK
+          </span>
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
