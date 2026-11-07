@@ -28,23 +28,98 @@ export default function CustomerFields({ customer, onChange }: CustomerFieldsPro
           autoComplete="tel"
         />
       </Field>
-      <Field label="Ekspedisi Pilihan">
-        <select className={inputClass} value={customer.courier} onChange={(e) => onChange({ courier: e.target.value })}>
-          {COURIERS.map((courier) => (
-            <option key={courier} value={courier}>
-              {courier}
-            </option>
-          ))}
-        </select>
+      <Field label="Ekspedisi / Pengambilan">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {COURIERS.map((courier) => {
+            const isSelected = customer.courier === courier;
+            return (
+              <button
+                key={courier}
+                type="button"
+                onClick={() => onChange({ courier })}
+                className={`flex cursor-pointer items-center justify-center rounded-xl border px-3 py-2 text-xs font-bold transition active:scale-95 ${
+                  isSelected
+                    ? 'border-emerald-600 bg-emerald-50 text-emerald-900 shadow-xs'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
+                }`}
+              >
+                {isSelected && <span className="mr-1 text-emerald-600 font-black">✓</span>}
+                <span className="truncate">{courier}</span>
+              </button>
+            );
+          })}
+        </div>
       </Field>
+
       <Field label="Alamat Lengkap Pengiriman (Kota/Kabupaten)" className="sm:col-span-2">
-        <textarea rows={2} className={inputClass} value={customer.alamat} onChange={(e) => onChange({ alamat: e.target.value })} placeholder="Jalan, kelurahan, kecamatan, kota/kabupaten" />
+        <textarea
+          rows={2}
+          className={inputClass}
+          value={customer.alamat}
+          onChange={(e) => onChange({ alamat: e.target.value })}
+          placeholder="Jalan, kelurahan, kecamatan, kota/kabupaten tujuan pengiriman"
+        />
       </Field>
-      <Field label="Target Tanggal Jadi (Deadline Acara)">
-        <input type="date" min={todayIso()} className={inputClass} value={customer.deadline} onChange={(e) => onChange({ deadline: e.target.value })} />
+
+      <Field 
+        label="Target Tanggal Jadi (Deadline Acara)" 
+        className="sm:col-span-2"
+        hint="Pilih estimasi cepat atau tentukan tanggal pasti acara Anda"
+      >
+        <div className="space-y-2.5">
+          {/* Quick preset buttons */}
+          <div className="flex flex-wrap gap-2">
+            {[
+              { label: '⚡ Kilat 14 Hari', days: 14 },
+              { label: '📅 Reguler 30 Hari', days: 30 },
+              { label: '⏳ Santai 45 Hari', days: 45 },
+            ].map((preset) => {
+              const d = new Date();
+              d.setDate(d.getDate() + preset.days);
+              const dateVal = d.toISOString().split('T')[0];
+              const isSelected = customer.deadline === dateVal;
+
+              return (
+                <button
+                  key={preset.label}
+                  type="button"
+                  onClick={() => onChange({ deadline: dateVal })}
+                  className={`rounded-xl border px-3 py-1.5 text-xs font-bold transition active:scale-95 ${
+                    isSelected
+                      ? 'border-emerald-600 bg-emerald-600 text-white shadow-xs'
+                      : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:border-slate-300'
+                  }`}
+                >
+                  {preset.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+            <input
+              type="date"
+              min={todayIso()}
+              className={`${inputClass} flex-1`}
+              value={customer.deadline}
+              onChange={(e) => onChange({ deadline: e.target.value })}
+            />
+            {customer.deadline && (
+              <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200/80 whitespace-nowrap">
+                ✓ Target: {new Date(customer.deadline).toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+              </span>
+            )}
+          </div>
+        </div>
       </Field>
-      <Field label="Catatan Khusus Pengerjaan">
-        <input className={inputClass} value={customer.notes} onChange={(e) => onChange({ notes: e.target.value })} placeholder="Opsional" />
+
+      <Field label="Catatan Khusus Pengerjaan" className="sm:col-span-2">
+        <input
+          className={inputClass}
+          value={customer.notes}
+          onChange={(e) => onChange({ notes: e.target.value })}
+          placeholder="Contoh: Tolong packing per plastik satu persatu, bordir nama di kerah"
+        />
       </Field>
     </div>
   );
